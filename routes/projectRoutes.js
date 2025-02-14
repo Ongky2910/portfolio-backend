@@ -1,28 +1,23 @@
 const express = require("express");
-const { getProjects, createProject, deleteProject, updateProject, uploadProjectImage, upload } = require("../controllers/projectController");
+const { 
+  getProjects, 
+  createProject, 
+  updateProject, 
+  deleteProject, 
+  uploadProjectImage, 
+  upload 
+} = require("../controllers/projectController");
 
 const router = express.Router();
 
 console.log("📌 Project routes initialized");
 
-router.get("/", (req, res) => {
-  console.log("📢 GET /api/projects called");
-  getProjects(req, res);
-});
-
-router.post("/", (req, res) => {
-  console.log("📢 POST /api/projects called");
-  createProject(req, res);
-});
-
+router.get("/", getProjects);
+router.post("/", createProject);
 router.put("/:id", updateProject);
+router.delete("/:id", deleteProject);
 
-// **Pastikan upload.single() tidak error**
+// **Upload gambar**
 router.post("/upload", upload.single("image"), uploadProjectImage);
-
-router.delete("/:id", (req, res) => {
-  console.log("📢 DELETE /api/projects/:id called");
-  deleteProject(req, res);
-});
 
 module.exports = router;
